@@ -3,6 +3,9 @@ package com.smartcare.clinic.controller;
 import com.smartcare.clinic.entity.Doctor;
 import com.smartcare.clinic.service.DoctorService;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import java.util.List;
+import org.springframework.http.HttpHeaders;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -26,6 +29,17 @@ public class DoctorController {
     public List<Doctor> getAllDoctors() {
         return doctorService.getAllDoctors();
     }
+@GetMapping("/{doctorId}/availability")
+public List<String> getDoctorAvailability(
+        @PathVariable Long doctorId,
+        @RequestParam String date,
+        @RequestHeader(HttpHeaders.AUTHORIZATION) String token
+) {
+
+    LocalDate localDate = LocalDate.parse(date);
+
+    return doctorService.getDoctorAvailability(doctorId, localDate);
+}
 
     @GetMapping("/speciality/{speciality}")
     public List<Doctor> getDoctorsBySpeciality(@PathVariable String speciality) {
