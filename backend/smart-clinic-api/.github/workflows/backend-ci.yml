@@ -1,0 +1,27 @@
+name: Java Backend CI
+
+on:
+  push:
+    paths:
+      - "backend/smart-clinic-api/**"
+  pull_request:
+    paths:
+      - "backend/smart-clinic-api/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build with Maven
+        working-directory: backend/smart-clinic-api
+        run: ./mvnw clean install
