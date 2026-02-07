@@ -4,6 +4,7 @@ import com.smartcare.clinic.entity.Doctor;
 import com.smartcare.clinic.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -26,5 +27,11 @@ public class DoctorService {
     public List<Doctor> getDoctorsBySpeciality(String speciality) {
         return doctorRepository.findBySpeciality(speciality);
     }
+public List<Doctor> getDoctorsBySpecialityAndTime(String speciality, LocalTime time) {
+    return doctorRepository
+            .findBySpecialityAndAvailableFromLessThanEqualAndAvailableToGreaterThanEqual(
+                    speciality, time, time
+            );
+}
 
 }

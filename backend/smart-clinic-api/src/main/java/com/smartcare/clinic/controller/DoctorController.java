@@ -4,6 +4,7 @@ import com.smartcare.clinic.entity.Doctor;
 import com.smartcare.clinic.service.DoctorService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -30,5 +31,13 @@ public class DoctorController {
     public List<Doctor> getDoctorsBySpeciality(@PathVariable String speciality) {
         return doctorService.getDoctorsBySpeciality(speciality);
     }
+@GetMapping("/search")
+public List<Doctor> searchDoctors(
+        @RequestParam String speciality,
+        @RequestParam String time
+) {
+    LocalTime t = LocalTime.parse(time);
+    return doctorService.getDoctorsBySpecialityAndTime(speciality, t);
+}
 
 }
